@@ -46,13 +46,13 @@ app.post('/create-checkout-session',async (req,res)=>{
 
 // //route webhook
 app.post('/webhook',express.raw({type: 'application/json'}),(req,res)=>{
+    console.log(req.body)
     const sig = req.body
     try {
         events = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
       } catch (err) {
-        return response.status(400).send(`Webhook Error: ${err.message}`);
-        
-      }
+        return res.status(400).send(`Webhook Error: ${err.message}`);
+    }
     switch(events.type){
         case 'checkout.session.completed':
             const session = events.data.object;
@@ -65,7 +65,7 @@ app.post('/webhook',express.raw({type: 'application/json'}),(req,res)=>{
         default:
             console.log(`Unhandled event type ${events.type}`);
     }
-    response.json({recieved:true})
+    res.json({recieved:true})
 })
 
 
