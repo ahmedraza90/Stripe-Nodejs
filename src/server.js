@@ -17,7 +17,7 @@ const store_products = new Map([
 ]) 
 
 //routes
-app.post('/create-checkout-session',async (req,res)=>{
+app.post('/create-checkout-session',express.json({type: 'application/json'}),async (req,res)=>{
     try{ 
         const str_pay = await stripe.checkout.sessions.
         create({
