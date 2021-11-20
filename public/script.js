@@ -1,7 +1,7 @@
 const button = document.querySelector("button")
 button.addEventListener("click",async  () => {
 try{
-            const request = await fetch("/create-checkout-session",{
+            const request = await fetch("/kk",{
               method:"POST",
               headers:{
                    "Content-Type":"application/json"
