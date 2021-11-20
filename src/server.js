@@ -2,6 +2,8 @@ require('dotenv').config()
 const stripe = require('stripe')(process.env.STRIPE_SECERET_KEY)
 const express = require('express')
 const app = express()
+const bodyparser = require("body-parser")
+
 
 //middleware
 app.use(express.json())
@@ -46,7 +48,7 @@ app.post('/create-checkout-session',async (req,res)=>{
 })
 
 //route webhook
-app.post('/webhook',express.raw({type: 'application/json'}),async (req,res)=>{
+app.post('/webhook',bodyparser.raw({type: 'application/json'}),async (req,res)=>{
  try{   
     const payload = req.body
     const sig     = req.headers['stripe-signature'] 
