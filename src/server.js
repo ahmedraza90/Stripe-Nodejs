@@ -12,6 +12,7 @@ const store_products = new Map([
     [1,{priceincents:1000,name:"ahmed"}],
     [2,{priceincents:2000,name:"raza"}]
 ]) 
+
 //routes
 app.post('/create-checkout-session',async (req,res)=>{
     try{ 
@@ -44,32 +45,29 @@ app.post('/create-checkout-session',async (req,res)=>{
 }
 })
 
-// //route webhook
+//route webhook
 app.post('/webhook',express.raw({type: 'application/json'}),(req,res)=>{
     console.log(req.body)
-    const sig = req.headers['stripe-signature']
-    try {
-        events = stripe.webhooks.constructEvent(req.body, sig, 'whsec_dtAr4abS9Z5eyz1zrSQzUm76Pc0v8iyO');
-      } catch (err) {
-        return res.status(400).send(`Webhook Error: ${err.message}`);
-    }
-    switch(events.type){
-        case 'checkout.session.completed':
-            const session = events.data.object;
-            console.log('PaymentIntent was successful!');
-            break;
-        case 'payment_method.attached':
-            const paymentMethod = events.data.object;
-            console.log('PaymentMethod was attached to a Customer!');
-            break;
-        default:
-            console.log(`Unhandled event type ${events.type}`);
-    }
-    res.json({recieved:true})
+    res.send('stripe succesfully send recieved webhook request')
+    // const sig = req.headers['stripe-signature']
+    // try {
+    //     events = stripe.webhooks.constructEvent(req.body, sig, 'whsec_dtAr4abS9Z5eyz1zrSQzUm76Pc0v8iyO');
+    //   } catch (err) {
+    //     return res.status(400).send(`Webhook Error: ${err.message}`);
+    // }
+    // switch(events.type){
+    //     case 'checkout.session.completed':
+    //         const session = events.data.object;
+    //         console.log('PaymentIntent was successful!');
+    //         break;
+    //     case 'payment_method.attached':
+    //         const paymentMethod = events.data.object;
+    //         console.log('PaymentMethod was attached to a Customer!');
+    //         break;
+    //     default:
+    //         console.log(`Unhandled event type ${events.type}`);
+    // }
+    // res.json({recieved:true})
 })
 
-
-app.get('/l',(req,res)=>{
-    res.send('hello world')
-})
 app.listen(process.env.PORT || 3000)    
