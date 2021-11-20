@@ -53,7 +53,7 @@ app.post('/webhook',express.raw({type: 'application/json'}),(req,res)=>{
     const key     = 'whsec_vnVfWIsXyQoyDDvko1ckeM5mutX9bX5U'
     const event = stripe.webhooks.constructEvent(payload,sig,key)
 
-    res.send(event)
+    res.json({event})
     // const sig = req.headers['stripe-signature']
     // try {
     //     events = stripe.webhooks.constructEvent(req.body, sig, 'whsec_dtAr4abS9Z5eyz1zrSQzUm76Pc0v8iyO');
