@@ -47,8 +47,13 @@ app.post('/create-checkout-session',async (req,res)=>{
 
 //route webhook
 app.post('/webhook',express.raw({type: 'application/json'}),(req,res)=>{
-    console.log(req.body)
-    res.send(req.body.type)
+    
+    const payload = req.body
+    const sig     = req.headers['stripe-signature'] 
+    const key     = 'whsec_vnVfWIsXyQoyDDvko1ckeM5mutX9bX5U'
+    const event = stripe.webhooks.constructEvent(payload,sig,key)
+
+    res.send(event)
     // const sig = req.headers['stripe-signature']
     // try {
     //     events = stripe.webhooks.constructEvent(req.body, sig, 'whsec_dtAr4abS9Z5eyz1zrSQzUm76Pc0v8iyO');
