@@ -45,29 +45,30 @@ app.post('/create-checkout-session',async (req,res)=>{
 })
 
 // //route webhook
-// app.post('/webhook',express.raw({type: 'application/json'}),(req,res)=>{
-//     console.log('lllll')
-//     const sig = req.body
-//     try {
-//         events = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
-//       } catch (err) {
-//         return response.status(400).send(`Webhook Error: ${err.message}`);
+app.post('/webhook',express.raw({type: 'application/json'}),(req,res)=>{
+    const sig = req.body
+    try {
+        events = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+      } catch (err) {
+        return response.status(400).send(`Webhook Error: ${err.message}`);
         
-//       }
-//     switch(events.type){
-//         case 'checkout.session.completed':
-//             const session = events.data.object;
-//             console.log('PaymentIntent was successful!');
-//             break;
-//         case 'payment_method.attached':
-//             const paymentMethod = events.data.object;
-//             console.log('PaymentMethod was attached to a Customer!');
-//             break;
-//         default:
-//             console.log(`Unhandled event type ${events.type}`);
-//     }
-//     response.json({recieved:true})
-// })
+      }
+    switch(events.type){
+        case 'checkout.session.completed':
+            const session = events.data.object;
+            console.log('PaymentIntent was successful!');
+            break;
+        case 'payment_method.attached':
+            const paymentMethod = events.data.object;
+            console.log('PaymentMethod was attached to a Customer!');
+            break;
+        default:
+            console.log(`Unhandled event type ${events.type}`);
+    }
+    response.json({recieved:true})
+})
+
+
 app.get('/l',(req,res)=>{
     res.send('hello world')
 })
