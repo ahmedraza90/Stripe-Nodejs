@@ -40,7 +40,7 @@ app.post('/create-checkout-session',async (req,res)=>{
         
     }catch(e){
         console.log(e)
-    res.status(500).json({error: e.message})
+        res.status(500).json({error: e.message})
 }
 })
 
@@ -68,5 +68,7 @@ app.post('/create-checkout-session',async (req,res)=>{
 //     }
 //     response.json({recieved:true})
 // })
-
+app.get('/l',(req,res)=>{
+    res.send('hello world')
+})
 app.listen(process.env.PORT || 3000)    
