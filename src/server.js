@@ -14,33 +14,34 @@ const store_products = new Map([
 ]) 
 //routes
 app.post('/create-checkout-session',async (req,res)=>{
-    try{ 
-        const str_pay = await stripe.checkout.sessions.
-        create({
-            payment_method_types:['card'],
-            mode:'payment',
-            line_items: req.body.items.map((item)=>{
-                const product = store_products.get(item.id)
-                return {
-                    price_data:{
-                        currency:'usd',
-                        product_data:{
-                            name:product.name
-                        },
-                        unit_amount:product.priceincents
+    res.send('hello')
+//     try{ 
+//         const str_pay = await stripe.checkout.sessions.
+//         create({
+//             payment_method_types:['card'],
+//             mode:'payment',
+//             line_items: req.body.items.map((item)=>{
+//                 const product = store_products.get(item.id)
+//                 return {
+//                     price_data:{
+//                         currency:'usd',
+//                         product_data:{
+//                             name:product.name
+//                         },
+//                         unit_amount:product.priceincents
                         
-                    },
-                    quantity:item.quantity
-                }
-            }),//here coming data would be use
-            success_url:`${process.env.CLIENT_URL}/success.html`,
-            cancel_url:`${process.env.CLIENT_URL}/cancel.html`
-        })
-        res.json({url:str_pay.url})
+//                     },
+//                     quantity:item.quantity
+//                 }
+//             }),//here coming data would be use
+//             success_url:`${process.env.CLIENT_URL}/success.html`,
+//             cancel_url:`${process.env.CLIENT_URL}/cancel.html`
+//         })
+//         res.json({url:str_pay.url})
         
-    }catch(e){
-    res.status(500).json({error: e.message})
-}
+//     }catch(e){
+//     res.status(500).json({error: e.message})
+// }
 })
 
 //route webhook
