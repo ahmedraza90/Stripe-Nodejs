@@ -47,9 +47,9 @@ app.post('/create-checkout-session',async (req,res)=>{
 // //route webhook
 app.post('/webhook',express.raw({type: 'application/json'}),(req,res)=>{
     console.log(req.body)
-    const sig = req.body
+    const sig = req.headers['stripe-signature']
     try {
-        events = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+        events = stripe.webhooks.constructEvent(req.body, sig, 'whsec_dtAr4abS9Z5eyz1zrSQzUm76Pc0v8iyO');
       } catch (err) {
         return res.status(400).send(`Webhook Error: ${err.message}`);
     }
