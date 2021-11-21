@@ -56,7 +56,7 @@ app.post('/webhook',express.raw({type: 'application/json'}),async (req,res)=>{
     const key     = 'whsec_vnVfWIsXyQoyDDvko1ckeM5mutX9bX5U'
     const event = await stripe.webhooks.constructEvent(payload,sig,key)
 
-    res.send("fatah")
+    res.send(event)
  }catch(e){
      res.send(e)
  }
