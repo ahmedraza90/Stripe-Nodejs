@@ -58,14 +58,14 @@ app.post('/webhook',express.raw({type: 'application/json'}),async (req,res)=>{
 
     switch (event.type) {
         case 'checkout.session.completed':
-          const session = event.data.object;
-          res.send(session)
+          const session_1 = event.data.object;
+          res.send(session_1)
           // Then define and call a function to handle the event checkout.session.completed
-          break;
+        break;
         case 'checkout.session.expired':
-          const session = event.data.object;
+          const session_2 = event.data.object;
           // Then define and call a function to handle the event checkout.session.expired
-          break;
+        break;
         default:
           console.log(`Unhandled event type ${event.type}`);
       }
