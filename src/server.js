@@ -59,7 +59,7 @@ app.post('/webhook',express.raw({type: 'application/json'}),async (req,res)=>{
     switch (event.type) {
         case 'checkout.session.completed':
           const session_1 = event.data.object;
-          res.send(session_1)
+          res.send('session_1')
           // Then define and call a function to handle the event checkout.session.completed
         break;
         case 'checkout.session.expired':
