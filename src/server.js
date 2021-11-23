@@ -54,31 +54,24 @@ app.post('/webhook',express.raw({type: 'application/json'}),async (req,res)=>{
     const payload = req.body
     const sig     = req.headers['stripe-signature'] 
     const key     = 'whsec_vnVfWIsXyQoyDDvko1ckeM5mutX9bX5U'
-    const event = await stripe.webhooks.constructEvent(payload,sig,key)
+    const event   = await stripe.webhooks.constructEvent(payload,sig,key)
 
-    res.send(event)
+    switch (event.type) {
+        case 'checkout.session.completed':
+          const session = event.data.object;
+          res.send(session)
+          // Then define and call a function to handle the event checkout.session.completed
+          break;
+        case 'checkout.session.expired':
+          const session = event.data.object;
+          // Then define and call a function to handle the event checkout.session.expired
+          break;
+        default:
+          console.log(`Unhandled event type ${event.type}`);
+      }
  }catch(e){
      res.send(e)
  }
-    // const sig = req.headers['stripe-signature']
-    // try {
-    //     events = stripe.webhooks.constructEvent(req.body, sig, 'whsec_dtAr4abS9Z5eyz1zrSQzUm76Pc0v8iyO');
-    //   } catch (err) {
-    //     return res.status(400).send(`Webhook Error: ${err.message}`);
-    // }
-    // switch(events.type){
-    //     case 'checkout.session.completed':
-    //         const session = events.data.object;
-    //         console.log('PaymentIntent was successful!');
-    //         break;
-    //     case 'payment_method.attached':
-    //         const paymentMethod = events.data.object;
-    //         console.log('PaymentMethod was attached to a Customer!');
-    //         break;
-    //     default:
-    //         console.log(`Unhandled event type ${events.type}`);
-    // }
-    // res.json({recieved:true})
 })
 
 app.listen(process.env.PORT || 3000)    
